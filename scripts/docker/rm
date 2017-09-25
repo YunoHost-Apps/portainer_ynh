@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker rm -f YNH_APP
+docker rm -f YNH_APP >/dev/null 2>&1
+echo $?
