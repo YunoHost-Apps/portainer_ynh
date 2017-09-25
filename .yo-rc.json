@@ -1,0 +1,16 @@
+{
+  "generator-dockerapp-yunohost": {
+    "beautifulName": "Portainer",
+    "defaultPathOption": "",
+    "forceSecureAccess": false,
+    "secureAccessOption": false,
+    "adminUserOption": false,
+    "enDescription": "A web interface for the Docker engine management",
+    "frDescription": "Une interface web pour la gestion de Docker engine",
+    "urlApp": "https://portainer.io/",
+    "urlDockerHub": "https://hub.docker.com/r/portainer/portainer/",
+    "authorName": "aymhce",
+    "authorEmail": "aymhce@gmail.com",
+    "idName": "portainer"
+  }
+}

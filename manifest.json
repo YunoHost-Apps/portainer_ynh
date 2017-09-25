@@ -1,0 +1,35 @@
+{
+    "name": "Portainer",
+    "id": "portainer",
+    "url": "https://portainer.io/",
+    "packaging_format": 1,
+    "description": {
+        "en": "A web interface for the Docker engine management",
+        "fr": "Une interface web pour la gestion de Docker engine"
+    },
+    "license": "GNU GPL",
+    "maintainer": {
+        "name": "aymhce",
+        "email": "aymhce@gmail.com"
+    },
+    "requirements": {
+        "yunohost": ">> 2.5"
+    },
+    "services": [
+        "nginx"
+     ],
+    "multi_instance": true,
+    "arguments": {
+        "install" : [
+            {
+                "name": "domain",
+                "type": "domain",
+                "ask": {
+                    "en": "Choose a domain for Portainer",
+                    "fr": "Choisissez un domaine pour Portainer"
+                },
+                "example": "app.domain.org"
+            }
+        ]
+    }
+}
