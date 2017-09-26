@@ -17,7 +17,7 @@ dockerapp_ynh_checkinstalldocker () {
 	then
 		# install
 		start_docker="0"
-		[ ! -e /var/run/docker.sock ] && [ -z "$DOCKER_HOST" ] && start_docker="1"
+		[ ! -e /var/run/docker.sock ] && [ -z $DOCKER_HOST ] && start_docker="1"
 		curl -sSL https://get.docker.com | sh
 		[ "$start_docker" == "1" ] && systemctl start docker && systemctl enable docker
 		pip install docker-compose
