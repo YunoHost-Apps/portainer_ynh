@@ -41,8 +41,8 @@ dockerapp_ynh_checkinstalldocker
 
 # Check domain/path availability
 dockerapp_ynh_loadvariables
-ynh_webpath_available $domain $path
-ynh_webpath_register $app $domain $path
+ynh_webpath_available $domain $path_url
+ynh_webpath_register $app $domain $path_url
 
 #=================================================
 # MODIFY A CONFIG FILE
@@ -80,8 +80,8 @@ ynh_app_setting_set $app skipped_uris "/"
 
 
 #=================================================
-# RELOAD NGINX
+# RELOAD SSOWAT
 #=================================================
 
-# Reload Nginx and regenerate SSOwat conf
+# Regenerate SSOwat conf
 dockerapp_ynh_reloadservices

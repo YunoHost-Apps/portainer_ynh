@@ -70,10 +70,12 @@ dockerapp_ynh_run
 #=================================================
 
 ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
+systemctl reload nginx
 
 #=================================================
-# RELOAD NGINX
+# RELOAD SSOWAT
 #=================================================
 
-# Reload Nginx and regenerate SSOwat conf
+# Regenerate SSOwat conf
 dockerapp_ynh_reloadservices
+
