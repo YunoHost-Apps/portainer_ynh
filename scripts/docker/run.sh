@@ -10,4 +10,8 @@ other_options="--add-host yunohost:YNH_HOST"
 [ "$incontainer" == "0" ] && other_options="--link YNH_ID:yunohost"
 
 docker run -d --name=YNH_APP --restart always $options $other_options $image >/dev/null 2>&1
-echo $?
+CR=$?
+
+sleep 60
+
+echo $CR

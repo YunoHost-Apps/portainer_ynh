@@ -8,7 +8,7 @@
         "fr": "Une interface web pour la gestion de Docker engine"
     },
     "version": "1.0",
-    "license": "GNU GPL",
+    "license": "AGPL-3.0",
     "maintainer": {
         "name": "aymhce",
         "email": "aymhce@gmail.com"

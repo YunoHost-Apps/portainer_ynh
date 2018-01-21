@@ -62,7 +62,7 @@ dockerapp_ynh_findreplaceallvaribles () {
         dockerapp_ynh_findreplacepath "YNH_PORT" "$port"
         dockerapp_ynh_findreplacepath "YNH_PATH" "$path_url"
         dockerapp_ynh_findreplacepath "YNH_HOST" "$docker_host"
-        dockerapp_ynh_findreplacepath "YNH_ID" "$yunohost_id"
+        [ "$incontainer" == "0" ] && dockerapp_ynh_findreplacepath "YNH_ID" "$yunohost_id"
 	bash docker/_specificvariablesapp.sh
 }
 
@@ -110,6 +110,7 @@ dockerapp_ynh_preparenginx () {
 	# get port after container created
 	port=$(docker port "$app" | awk -F':' '{print $NF}')
 	ynh_app_setting_set $app port $port
+
 
 	ynh_add_nginx_config
 }
