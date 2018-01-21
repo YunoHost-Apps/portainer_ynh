@@ -110,6 +110,7 @@ dockerapp_ynh_preparenginx () {
 	# get port after container created
 	port=$(docker port "$app" | awk -F':' '{print $NF}')
 	ynh_app_setting_set $app port $port
+	ynh_replace_string "__DOCKER_HOST__" "$docker_host" "../conf/nginx.conf"
 
 
 	ynh_add_nginx_config
