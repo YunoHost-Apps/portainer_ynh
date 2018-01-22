@@ -44,7 +44,7 @@ dockerapp_ynh_checkinstalldocker () {
 
 # find replace
 dockerapp_ynh_findreplace () {
-	for file in $(grep -rl "$2" "$1")
+	for file in $(grep -rl "$2" "$1" 2>/dev/null)
 	do
 		ynh_replace_string "$2" "$3" "$file"
 	done
@@ -95,6 +95,9 @@ dockerapp_ynh_run () {
 	if [ "$ret" != "0" ]
 	then
 		docker logs $app
+		docker inspect $app
+		# fix after yunohost restore iptables issue
+		[ "$ret" == "125" ] && docker inspect $app | grep "Error" | grep -q "iptables failed" && systemctl restart docker && return 0
 		ynh_die "Sorry ! App cannot start with docker. Please check docker logs."
 	fi
 }

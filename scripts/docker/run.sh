@@ -12,6 +12,4 @@ other_options="--add-host yunohost:YNH_HOST"
 docker run -d --name=YNH_APP --restart always $options $other_options $image >/dev/null 2>&1
 CR=$?
 
-sleep 60
-
 echo $CR
