@@ -21,7 +21,6 @@ dockerapp_ynh_checkinstalldocker () {
 		curl -sSL https://get.docker.com | sh
 		[ "$start_docker" == "1" ] && systemctl start docker && systemctl enable docker
 		pip install docker-compose
-		MORE_LOG1=" despite previous docker installation"
 
 		# retest
 		ret=$(sh _dockertest.sh)
@@ -65,7 +64,6 @@ dockerapp_ynh_loadvariables () {
 	export architecture=$(dpkg --print-architecture)
 	export incontainer=$(dockerapp_ynh_incontainer)
         docker_host=localhost
-	#$(hostname -I | awk '{print $1}')
 }
 
 # copy conf app
