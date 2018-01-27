@@ -28,7 +28,7 @@ dockerapp_ynh_checkinstalldocker () {
 
 	if [ $ret != 0 ]
 	then
-		ynh_die "Sorry ! Your Docker deamon don't work$MORE_LOG1 ... Please check your system logs.$MORE_LOG2$MORE_LOG3"
+		ynh_die "Sorry ! Your Docker deamon don't work ... Please check your system logs."
 	fi
 
 }
@@ -42,7 +42,6 @@ dockerapp_ynh_findreplace () {
 }
 
 dockerapp_ynh_findreplacepath () {
-	dockerapp_ynh_findreplace docker/. "$1" "$2"
 	dockerapp_ynh_findreplace ../conf/. "$1" "$2"
 }
 
@@ -57,13 +56,13 @@ dockerapp_ynh_findreplaceallvaribles () {
 
 # load variables
 dockerapp_ynh_loadvariables () {
-	data_path=/home/yunohost.docker/$app
-	port=$(ynh_app_setting_get $app port)
+	export app=$app
+	export data_path=/home/yunohost.docker/$app
+	export port=$(ynh_app_setting_get $app port)
 	[ "$port" == "" ] && port=0
 	path_url=/
 	export architecture=$(dpkg --print-architecture)
 	export incontainer=$(dockerapp_ynh_incontainer)
-        docker_host=localhost
 }
 
 # copy conf app
@@ -85,17 +84,17 @@ dockerapp_ynh_run () {
 
 # docker rm
 dockerapp_ynh_rm () {
-	ynh_replace_string "YNH_APP" "$app" docker/rm.sh
 	bash docker/rm.sh
+}
+
+# get port from docker
+dockerapp_ynh_getandsaveport () {
+        export port=$(docker port "$app" | awk -F':' '{print $NF}')
+        ynh_app_setting_set $app port $port
 }
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 dockerapp_ynh_preparenginx () {
-	# get port after container created
-	port=$(docker port "$app" | awk -F':' '{print $NF}')
-	ynh_app_setting_set $app port $port
-	ynh_replace_string "__DOCKER_HOST__" "$docker_host" "../conf/nginx.conf"
-
 
 	ynh_add_nginx_config
 }

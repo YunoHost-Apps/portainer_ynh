@@ -11,6 +11,7 @@
     "urlDockerHub": "https://hub.docker.com/r/portainer/portainer/",
     "authorName": "aymhce",
     "authorEmail": "aymhce@gmail.com",
-    "idName": "portainer"
+    "idName": "portainer",
+    "reverseProxyProtocol": "http"
   }
 }
