@@ -57,6 +57,7 @@ dockerapp_ynh_findreplaceallvaribles () {
 # load variables
 dockerapp_ynh_loadvariables () {
 	export app=$app
+        export domain=$domain
 	export data_path=/home/yunohost.docker/$app
 	export port=$(ynh_app_setting_get $app port)
 	[ "$port" == "" ] && port=0

@@ -12,6 +12,7 @@
     "authorName": "aymhce",
     "authorEmail": "aymhce@gmail.com",
     "idName": "portainer",
-    "reverseProxyProtocol": "http"
+    "reverseProxyProtocol": "http",
+    "scriptsLoadSave": false
   }
 }
