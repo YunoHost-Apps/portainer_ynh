@@ -7,6 +7,7 @@ set -eu
 #=================================================
 
 [ ! -e _common.sh ] && cp ../settings/scripts/_common.sh ./.
+[ ! -e docker/ ] && cp -rf ../settings/scripts/docker/ ./.
 source _common.sh
 source /usr/share/yunohost/helpers
 
