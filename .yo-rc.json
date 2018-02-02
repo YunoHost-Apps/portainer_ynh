@@ -2,7 +2,7 @@
   "generator-dockerapp-yunohost": {
     "beautifulName": "Portainer",
     "defaultPathOption": "",
-    "forceSecureAccess": false,
+    "forceSecureAccess": true,
     "secureAccessOption": false,
     "adminUserOption": false,
     "enDescription": "A web interface for the Docker engine management",
