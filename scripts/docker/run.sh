@@ -5,7 +5,7 @@
 [ "$architecture" == "armhf" ] && image=portainer/portainer:linux-arm-1.19.1
 [ -z $image ] && ynh_die "Sorry, your $architecture architecture is not supported ..."
 
-options="-p $port:9000 -v $data_path/data:/data -v /var/run/docker.sock:/var/run/docker.sock"
+options="-p $port:9000 -v $data_path/data:/data -v /var/run/docker.sock:/var/run/docker.sock --no-auth"
 
 iptables -t filter -N DOCKER 
 
