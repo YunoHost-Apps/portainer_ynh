@@ -6,7 +6,7 @@
 [ -z $image ] && ynh_die "Sorry, your $architecture architecture is not supported ..."
 
 options="-p $port:9000 -v $data_path/data:/data -v /var/run/docker.sock:/var/run/docker.sock"
-containeroptions="--no-auth"
+containeroptions="--no-auth --host unix:///var/run/docker.sock"
 
 iptables -t filter -N DOCKER 
 
