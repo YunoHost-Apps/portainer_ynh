@@ -73,9 +73,8 @@ dockerapp_ynh_preparenginx
 # SETUP SSOWAT
 #=================================================
 
-
-
-
+# Add webhook URLs to SSOwat skip list
+ynh_app_setting_set --app=$app --key=skipped_uris --value="/api/webhooks/"
 
 #=================================================
 # RELOAD SSOWAT
