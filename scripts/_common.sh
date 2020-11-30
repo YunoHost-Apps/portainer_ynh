@@ -1,5 +1,16 @@
 #!/bin/bash
 
+#=================================================
+# COMMON VARIABLES
+#=================================================
+
+# dependencies used by the app
+pkg_dependencies="curl"
+
+#=================================================
+# PERSONAL HELPERS
+#=================================================
+
 # test in container
 dockerapp_ynh_incontainer () {
         if [ -f /.dockerenv ]; then
@@ -29,7 +40,7 @@ dockerapp_ynh_checkinstalldocker () {
 		# install
 		curl -sSL https://get.docker.com | sh
 		systemctl enable docker
-		curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+		curl -L https://github.com/docker/compose/releases/download/${version}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 
 		#for d in overlay2 overlay devicemapper aufs vfs
 		#do
@@ -69,18 +80,6 @@ dockerapp_ynh_findreplaceallvaribles () {
 	bash docker/_specificvariablesapp.sh
 }
 
-# load variables
-dockerapp_ynh_loadvariables () {
-	export app=$app
-        export domain=$domain
-	export data_path=/home/yunohost.docker/$app
-	export port=$(ynh_app_setting_get $app port)
-	[ "$port" == "" ] && port=$(ynh_find_port 31000) && ynh_app_setting_set $app port $port
-	path_url=/
-	export architecture=$(dpkg --print-architecture)
-	export incontainer=$(dockerapp_ynh_incontainer)
-}
-
 # copy conf app
 dockerapp_ynh_copyconf () {
 	mkdir -p $data_path
@@ -89,25 +88,31 @@ dockerapp_ynh_copyconf () {
 
 # docker run
 dockerapp_ynh_run () {
-	ret=$(bash docker/run.sh)
-	if [ "$ret" != "0" ]
-	then
-		# fix after yunohost restore iptables issue
-		[ "$ret" == "125" ] && docker inspect $app | grep "Error" | grep -q "iptables failed" && systemctl restart docker && return 0
-		ynh_die "Sorry ! App cannot start with docker. Please check docker logs."
-	fi
+	export architecture=$(dpkg --print-architecture)
+	export incontainer=$(dockerapp_ynh_incontainer)
+	# ret=$(bash docker/run.sh)
+	# if [ "$ret" != "0" ]
+	# then
+	# 	# fix after yunohost restore iptables issue
+	# 	[ "$ret" == "125" ] && docker inspect $app | grep "Error" | grep -q "iptables failed" && systemctl restart docker && return 0
+	# 	ynh_die "Sorry ! App cannot start with docker. Please check docker logs."
+	# fi
+	[ "$architecture" == "amd64" ] && image=portainer/portainer-ce:${portainer_version}
+	[ "$architecture" == "i386" ]  && image=portainer/portainer-ce:linux-386-${portainer_version}
+	[ "$architecture" == "armhf" ] && image=portainer/portainer-ce:linux-arm-${portainer_version}
+	[ -z $image ] && ynh_die "Sorry, your ${architecture} architecture is not supported ..."
+
+	options="-p $port:9000 -v ${data_path}/data:/data -v /var/run/docker.sock:/var/run/docker.sock"
+	containeroptions=""
+
+	# iptables -t filter -N DOCKER
+
+	docker run -d --name=$app --restart always $options $image $containeroptions
 }
 
 # docker rm
 dockerapp_ynh_rm () {
 	bash docker/rm.sh
-}
-
-
-# Modify Nginx configuration file and copy it to Nginx conf directory
-dockerapp_ynh_preparenginx () {
-
-	ynh_add_nginx_config
 }
 
 # Regenerate SSOwat conf

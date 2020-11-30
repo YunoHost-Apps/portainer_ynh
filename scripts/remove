@@ -1,22 +1,24 @@
 #!/bin/bash
 
 #=================================================
+# GENERIC START
+#=================================================
 # IMPORT GENERIC HELPERS
 #=================================================
 
-# Source YunoHost helpers
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # LOAD SETTINGS
 #=================================================
+ynh_script_progression --message="Loading installation settings..." --weight=1
 
 # Retrieve app settings
 app=$YNH_APP_INSTANCE_NAME
+port=$(ynh_app_setting_get --app=$app --key=port)
 domain=$(ynh_app_setting_get "$app" domain)
-
-dockerapp_ynh_loadvariables
+data_path=/home/yunohost.app/docker/$app
 
 #=================================================
 # STOP AND REMOVE SERVICE
@@ -26,21 +28,31 @@ dockerapp_ynh_loadvariables
 dockerapp_ynh_rm
 
 #=================================================
+# REMOVE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Removing dependencies..." --weight=1
+
+# Remove metapackage and its dependencies
+ynh_remove_app_dependencies
+
+#=================================================
 # REMOVE APP MAIN DIR
 #=================================================
 
 # Remove conf and app
-ynh_secure_remove $data_path
+ynh_secure_remove --file="$data_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
+ynh_script_progression --message="Removing nginx web server configuration..." --weight=1
 
+# Remove the dedicated nginx config
 ynh_remove_nginx_config
 
+
 #=================================================
-# RELOAD SSOWAT
+# END OF SCRIPT
 #=================================================
 
-# Regenerate SSOwat conf
-dockerapp_ynh_reloadservices
+ynh_script_progression --message="Removal of $app completed" --time --last

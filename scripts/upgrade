@@ -1,35 +1,47 @@
 #!/bin/bash
 
 #=================================================
+# GENERIC START
+#=================================================
 # IMPORT GENERIC HELPERS
 #=================================================
 
-# Source YunoHost helpers
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# MANAGE SCRIPT FAILURE
+# LOAD SETTINGS
 #=================================================
+ynh_script_progression --message="Loading installation settings..." --time --weight=1
 
+app=$YNH_APP_INSTANCE_NAME
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+path_url="/"
+is_public=$(ynh_app_setting_get --app=$app --key=is_public)
+port=$(ynh_app_setting_get --app=$app --key=port)
+data_path=/home/yunohost.app/docker/$app
+version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)
+portainer_version=$(curl -s https://api.github.com/repos/portainer/portainer/releases/latest | grep 'tag_name' | cut -d\" -f4)
+
+#=================================================
+# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
+#=================================================
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --time --weight=1
+
+# Backup the current version of the app
+ynh_backup_before_upgrade
+ynh_clean_setup () {
+	# restore it if the upgrade fails
+	ynh_restore_upgradebackup
+}
+# Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
 #=================================================
-# LOAD SETTINGS
+# STORE SETTINGS FROM MANIFEST
 #=================================================
 
-# Retrieve app settings
-app=$YNH_APP_INSTANCE_NAME
-domain=$(ynh_app_setting_get "$app" domain)
-
-
-dockerapp_ynh_loadvariables
-
-#=================================================
-# MODIFY A CONFIG FILE
-#=================================================
-
-dockerapp_ynh_findreplaceallvaribles
+ynh_app_setting_set --app=$app --key=version --value=$version
 
 #=================================================
 # STOP AND REMOVE SERVICE
@@ -49,20 +61,43 @@ dockerapp_ynh_run
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
+ynh_script_progression --message="Upgrading nginx web server configuration..." --time --weight=1
 
-# Modify Nginx configuration file and copy it to Nginx conf directory
-dockerapp_ynh_preparenginx
+# Create a dedicated nginx config
+ynh_add_nginx_config
+
+#=================================================
+# UPGRADE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Upgrading dependencies..." --time --weight=1
+
+ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
+ynh_script_progression --message="Configuring SSOwat..." --weight=3
 
 # Add webhook URLs to SSOwat skip list
 ynh_app_setting_set --app=$app --key=skipped_uris --value="/api/webhooks/"
 
+# Make app public if necessary or protect it
+if [ $is_public -eq 1 ]
+then
+	# Everyone can access the app.
+	# The "main" permission is automatically created before the install script.
+	ynh_permission_update --permission "main" --add "visitors"
+fi
+
 #=================================================
-# RELOAD SSOWAT
+# RELOAD NGINX
+#=================================================
+ynh_script_progression --message="Reloading nginx web server..." --weight=1
+
+ynh_systemd_action --service_name=nginx --action=reload
+
+#=================================================
+# END OF SCRIPT
 #=================================================
 
-# Regenerate SSOwat conf
-dockerapp_ynh_reloadservices
+ynh_script_progression --message="Upgrade of $app completed" --time --last
