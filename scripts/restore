@@ -35,6 +35,8 @@ path_url=$(ynh_app_setting_get --app=$app --key=path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 is_public=$(ynh_app_setting_get --app=$app --key=is_public)
 data_path=/home/yunohost.app/docker/$app
+version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)
+portainer_version=$(curl -s https://api.github.com/repos/portainer/portainer/releases/latest | grep 'tag_name' | cut -d\" -f4)
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
@@ -71,6 +73,7 @@ ynh_restore_file --origin_path="$data_path"
 #=================================================
 
 # docker run
+dockerapp_ynh_rm
 dockerapp_ynh_run
 
 #=================================================
