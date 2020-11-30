@@ -112,7 +112,7 @@ dockerapp_ynh_run () {
 
 # docker rm
 dockerapp_ynh_rm () {
-	docker rm -f $app
+	docker rm -f $app 2>&1 >/dev/null
 }
 
 # Regenerate SSOwat conf
