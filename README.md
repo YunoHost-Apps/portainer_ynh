@@ -37,9 +37,9 @@ This app is inside a [Docker image](https://hub.docker.com/r/portainer/portainer
 ## Links
 
  * Report a bug: https://github.com/YunoHost-Apps/portainer/issues
- * App website: [Portainer](https://portainer.io/).
+ * App website: https://portainer.io
  * Upstream app repository: https://github.com/portainer/portainer
- * YunoHost website: https://yunohost.org/
+ * YunoHost website: https://yunohost.org
 
 ---
 
