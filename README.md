@@ -7,16 +7,22 @@
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview
-A web interface for the Docker engine management.It allows you to manage all your Docker resources (containers, images, volumes, networks and more!).
+A web interface for the Docker engine management. It allows you to manage all your Docker resources (containers, images, volumes, networks and more!).
+
+**Shipped version:** 2.0.0
+
+## Screenshots
+
+![](https://mk0portainer4y460ly6.kinstacdn.com/wp-content/uploads/2020/08/01_homescreen.png)
 
 ## Demo
 
-* [Official demo](http://demo.portainer.io/)
+* [Official live-demo](https://www.portainer.io/live-demo/)
 
 #### Multi-user support
 
  * Are LDAP and HTTP auth supported? **No**
- * Can the app be used by multiple users **No**
+ * Can the app be used by multiple users? **No**
 
 #### Supported architectures
 
