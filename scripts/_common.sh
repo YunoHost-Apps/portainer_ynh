@@ -24,7 +24,7 @@ dockerapp_ynh_incontainer () {
 dockerapp_ynh_driversetter () {
 	echo -e "{\n\t\"debug\": false,\n\t\"storage-driver\": \"$1\"\n}\n" > /etc/docker/daemon.json
 	systemctl stop docker >/dev/null 2>&1
-	rm -rf /var/lib/docker
+	ynh_secure_remove /var/lib/docker
 	mkdir -p /var/lib/docker
 	systemctl start docker >/dev/null 2>&1
 	sleep 30
@@ -54,7 +54,7 @@ dockerapp_ynh_checkinstalldocker () {
 
 	if [ $ret != 0 ]
 	then
-		ynh_die "Sorry ! Your Docker deamon don't work ... Please check your system logs."
+		ynh_die "Sorry! Your Docker deamon don't work... Please check your system logs."
 	fi
 
 }
