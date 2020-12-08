@@ -31,7 +31,6 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 data_path=/home/yunohost.app/docker/$app
 
-
 #=================================================
 # BACKUP THE APP MAIN DIR
 #=================================================

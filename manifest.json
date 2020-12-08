@@ -4,8 +4,8 @@
     "url": "https://portainer.io/",
     "packaging_format": 1,
     "description": {
-        "en": "A web interface for the Docker engine management",
-        "fr": "Une interface web pour la gestion de Docker engine"
+        "en": "Web interface for the Docker engine management",
+        "fr": "Interface web pour la gestion de Docker engine"
     },
     "version": "2.0.0~ynh1",
     "license": "AGPL-3.0",

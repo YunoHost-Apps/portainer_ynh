@@ -33,7 +33,6 @@ data_path=/home/yunohost.app/docker/$app
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-
 ynh_script_progression --message="Validating installation parameters..." --weight=1
 
 # Register (book) web path
@@ -77,11 +76,9 @@ dockerapp_ynh_checkinstalldocker
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring nginx web server..." --weight=1
+ynh_script_progression --message="Configuring NGINX web server..." --weight=1
 
-### `ynh_add_nginx_config` will use the file conf/nginx.conf
-
-# Create a dedicated nginx config
+# Create a dedicated NGINX config
 ynh_add_nginx_config
 
 #=================================================
@@ -90,7 +87,6 @@ ynh_add_nginx_config
 
 # docker run
 dockerapp_ynh_run
-
 
 #=================================================
 # SETUP SSOWAT
@@ -112,7 +108,7 @@ fi
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -120,4 +116,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed"  --last
+ynh_script_progression --message="Installation of $app completed" --last
