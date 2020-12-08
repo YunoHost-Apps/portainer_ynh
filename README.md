@@ -1,7 +1,6 @@
-# Portainer for Yunohost
+# Portainer for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/portainer.svg)](https://dash.yunohost.org/appci/app/portainer) ![](https://ci-apps.yunohost.org/ci/badges/portainer.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/portainer.maintain.svg)
-
+[![Integration level](https://dash.yunohost.org/integration/portainer.svg)](https://dash.yunohost.org/appci/app/portainer) ![](https://ci-apps.yunohost.org/ci/badges/portainer.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/portainer.maintain.svg)  
 [![Install Portainer with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=portainer)
 
 > *This package allows you to install Portainer quickly and simply on a YunoHost server.
@@ -16,8 +15,8 @@ A web interface for the Docker engine management.It allows you to manage all you
 
 #### Multi-user support
 
-Are LDAP and HTTP auth supported? No
-Can the app be used by multiple users No
+ * Are LDAP and HTTP auth supported? **No**
+ * Can the app be used by multiple users **No**
 
 #### Supported architectures
 
@@ -35,3 +34,16 @@ This app is inside a [Docker image](https://hub.docker.com/r/portainer/portainer
  * App website: [Portainer](https://portainer.io/).
  * Upstream app repository: https://github.com/portainer/portainer
  * YunoHost website: https://yunohost.org/
+
+---
+
+## Informations pour les développeurs
+
+Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/portainer_ynh/tree/testing).
+
+Pour essayer la branche testing, procédez comme suit.
+```
+sudo yunohost app install https://github.com/YunoHost-Apps/portainer_ynh/tree/testing --debug
+ou
+sudo yunohost app upgrade portainer -u https://github.com/YunoHost-Apps/portainer_ynh/tree/testing --debug
+```
