@@ -7,19 +7,19 @@
         "en": "A web interface for the Docker engine management",
         "fr": "Une interface web pour la gestion de Docker engine"
     },
-    "version": "1.0",
+    "version": "2.0.0~ynh1",
     "license": "AGPL-3.0",
     "maintainer": {
         "name": "aymhce",
         "email": "aymhce@gmail.com"
     },
     "requirements": {
-        "yunohost": ">= 2.7.2"
+        "yunohost": ">= 4.0.8"
     },
     "services": [
         "nginx"
      ],
-    "multi_instance": true,
+    "multi_instance": false,
     "arguments": {
         "install" : [
             {
@@ -30,6 +30,19 @@
                     "fr": "Choisissez un domaine pour Portainer"
                 },
                 "example": "app.domain.org"
+            },
+            {
+                "name": "is_public",
+                "type": "boolean",
+                "ask": {
+                    "en": "Is it a public site?",
+                    "fr": "Est-ce un site public ?"
+                },
+                "help": {
+                    "en": "If enabled, Portainer will be accessible by people who do not have an account. This can be changed later via the webadmin.",
+                    "fr": "Si cette case est cochée, Portainer sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
+                },
+                "default": true
             }
         ]
     }
