@@ -1,7 +1,7 @@
 # Portainer for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/portainer.svg)](https://dash.yunohost.org/appci/app/portainer) ![](https://ci-apps.yunohost.org/ci/badges/portainer.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/portainer.maintain.svg)  
-[![Install Portainer with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=portainer)
+[![Install Portainer with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=portainer)
 
 > *This package allows you to install Portainer quickly and simply on a YunoHost server.
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
