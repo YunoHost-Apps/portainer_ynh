@@ -9,7 +9,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 ## Overview
 A web interface for the Docker engine management. It allows you to manage all your Docker resources (containers, images, volumes, networks and more!).
 
-**Shipped version:** 2.0.0
+**Shipped version:** 2.11.0
 
 ## Screenshots
 
