@@ -4,44 +4,38 @@
     "url": "https://portainer.io/",
     "packaging_format": 1,
     "description": {
-        "en": "Web interface for the Docker engine management",
-        "fr": "Interface web pour la gestion de Docker engine"
+        "en": "Web interface for the Docker engine management"
     },
-    "version": "2.0.0~ynh1",
+    "version": "2.11.0~ynh1",
+    "url": "https://portainer.io",
+    "upstream": {
+        "license": "AGPL-3.0",
+        "website": "https://portainer.io",
+        "demo": "https://www.portainer.io/live-demo/",
+        "admindoc": "https://docs.portainer.io/",
+        "code": "https://github.com/portainer/portainer"
+    },
     "license": "AGPL-3.0",
     "maintainer": {
         "name": "aymhce",
         "email": "aymhce@gmail.com"
     },
     "requirements": {
-        "yunohost": ">= 4.0.8"
+        "yunohost": ">= 4.3.0"
     },
+    "multi_instance": false,
     "services": [
         "nginx"
      ],
-    "multi_instance": false,
     "arguments": {
         "install" : [
             {
                 "name": "domain",
-                "type": "domain",
-                "ask": {
-                    "en": "Choose a domain for Portainer",
-                    "fr": "Choisissez un domaine pour Portainer"
-                },
-                "example": "app.domain.org"
+                "type": "domain"
             },
             {
                 "name": "is_public",
                 "type": "boolean",
-                "ask": {
-                    "en": "Is it a public site?",
-                    "fr": "Est-ce un site public ?"
-                },
-                "help": {
-                    "en": "If enabled, Portainer will be accessible by people who do not have an account. This can be changed later via the webadmin.",
-                    "fr": "Si cette case est cochée, Portainer sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
-                },
                 "default": true
             }
         ]

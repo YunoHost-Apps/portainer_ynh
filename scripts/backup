@@ -1,14 +1,13 @@
 #!/bin/bash
-set -eu
+
 #=================================================
 # GENERIC START
 #=================================================
 # IMPORT GENERIC HELPERS
 #=================================================
-[ ! -e _common.sh ] && cp ../settings/scripts/_common.sh ./.
-[ ! -e docker/ ] && cp -rf ../settings/scripts/docker/ ./.
+
 #Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
-source _common.sh
+source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -16,7 +15,6 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 ynh_clean_setup () {
-	### Remove this function if there's nothing to clean before calling the remove script.
 	true
 }
 # Exit if an error occurs during the execution of the script
@@ -28,20 +26,40 @@ ynh_abort_if_errors
 ynh_print_info --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
+
 domain=$(ynh_app_setting_get --app=$app --key=domain)
-data_path=/home/yunohost.app/docker/$app
+datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+
+#=================================================
+# DECLARE DATA AND CONF FILES TO BACKUP
+#=================================================
+ynh_print_info --message="Declaring files to be backed up..."
 
 #=================================================
 # BACKUP THE APP MAIN DIR
 #=================================================
 
-ynh_backup --src_path="$data_path"
+docker save -o $app.tar $app
+
+#=================================================
+# BACKUP THE DATA DIR
+#=================================================
+
+docker save -o $app-data.tar $app-data
 
 #=================================================
 # BACKUP THE NGINX CONFIGURATION
 #=================================================
 
 ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
+
+#=================================================
+# SPECIFIC BACKUP
+#=================================================
+# BACKUP SYSTEMD
+#=================================================
+
+ynh_backup --src_path="/etc/systemd/system/$app.service"
 
 #=================================================
 # END OF SCRIPT

@@ -1,0 +1,12 @@
+[Unit]
+Description=Container __APP__
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker start __APP__
+ExecStart=/usr/bin/docker attach __APP__
+ExecStop=/usr/bin/docker stop __APP__
+
+[Install]
+WantedBy=multi-user.target
